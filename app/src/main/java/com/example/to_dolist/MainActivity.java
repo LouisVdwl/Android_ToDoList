@@ -40,22 +40,22 @@ public class MainActivity extends AppCompatActivity {
 
         mavariableListView = (ListView) findViewById(R.id.listView1);
 
-        todoitems = new ArrayList<String>();
-        aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoitems);
+        // todoitems = new ArrayList<String>();
+        // aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoitems);
         mavariableListView.setAdapter(aa);
 
         mavariableListView.setOnItemClickListener((parent, view, position, id) -> {
             mDbHelper.deleteNote(id);
-            todoitems.remove(position);
-            aa.notifyDataSetChanged();
+            // todoitems.remove(position);
+            // aa.notifyDataSetChanged();
         });
 
     }
 
-    public void createNote(){
-        EditText mavariableEditText = (EditText) findViewById(R.id.input1);
+    public void createNote(String task){
         String noteName = "Note " + mNoteNumber++;
-        mDbHelper.createNote(noteName, mavariableEditText.getText().toString());
+        mDbHelper.createNote(noteName, task);
+        fillData();
     }
 
     public void addItems(View v){
@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
         EditText mavariableEditText = (EditText) findViewById(R.id.input1);
         ListView mavariableListView = (ListView) findViewById(R.id.listView1);
 
-        todoitems.add(0, mavariableEditText.getText().toString());
-        aa.notifyDataSetChanged();
+        // todoitems.add(0, mavariableEditText.getText().toString());
+        // aa.notifyDataSetChanged();
         mavariableEditText.setText("");
-        createNote();
+        createNote(mavariableEditText.getText().toString());
         fillData();
     }
 
@@ -119,12 +119,12 @@ public class MainActivity extends AppCompatActivity {
         Cursor c = mDbHelper.fetchAllNotes();
         startManagingCursor(c);
 
-        String[] from = new String[] { NotesDbAdapter.KEY_TITLE };
-        int[] to = new int[] { R.id.text1 };
+        String[] from = new String[] { NotesDbAdapter.KEY_TITLE, NotesDbAdapter.KEY_BODY };
+        int[] to = new int[] { R.id.tv1, R.id.tv2 };
 
         // Now create an array adapter and set it to display using our row
         SimpleCursorAdapter notes =
                 new SimpleCursorAdapter(this, R.layout.notes_row, c, from, to);
-        mavariableListView.setListAdapter(notes);
+        mavariableListView.setAdapter(notes);
     }
 }
