@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">To-Do List</string>
+    <string name="textInput1">Nouvelle tâche</string>
+    <string name="textBtn1">Ajouter</string>
+    <string name="deleteOption">Supprimer tout</string>
+    <string name="opt1">Valider</string>
+    <string name="opt2">Annuler</string>
+    <string name="delete_message">Voulez-vous vraiment tout effacer ?</string>
+    <string name="title_message">Confirmation</string>
+</resources>
