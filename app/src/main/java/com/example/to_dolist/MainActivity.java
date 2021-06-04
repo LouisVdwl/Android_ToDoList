@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,13 +40,14 @@ public class MainActivity extends AppCompatActivity {
         mDbHelper.open();
 
         mavariableListView = (ListView) findViewById(R.id.listView1);
-
+        fillData();
         // todoitems = new ArrayList<String>();
         // aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoitems);
-        mavariableListView.setAdapter(aa);
+       // mavariableListView.setAdapter(aa);
 
         mavariableListView.setOnItemClickListener((parent, view, position, id) -> {
             mDbHelper.deleteNote(id);
+            fillData();
             // todoitems.remove(position);
             // aa.notifyDataSetChanged();
         });
@@ -65,8 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         // todoitems.add(0, mavariableEditText.getText().toString());
         // aa.notifyDataSetChanged();
-        mavariableEditText.setText("");
         createNote(mavariableEditText.getText().toString());
+        mavariableEditText.setText("");
+
         fillData();
     }
 
@@ -79,9 +82,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearList(View v){
-        todoitems.clear();
-        aa.notifyDataSetChanged();
+        mDbHelper.deleteAllNotes();
+        fillData();
     }
+
+    
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -101,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.opt1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                aa.clear();
+                mDbHelper.deleteAllNotes();
+                fillData();
             }
         });
         builder.setNegativeButton(R.string.opt2, new DialogInterface.OnClickListener() {

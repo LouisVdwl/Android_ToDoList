@@ -15,7 +15,10 @@
     <TextView
         android:id="@+id/tv2"
         android:layout_width="117dp"
-        android:layout_height="95dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="4dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/tv1"
         app:layout_constraintTop_toTopOf="parent" />

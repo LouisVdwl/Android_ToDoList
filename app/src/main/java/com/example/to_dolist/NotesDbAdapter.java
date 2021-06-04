@@ -137,6 +137,15 @@ public class NotesDbAdapter {
     }
 
     /**
+     * Delete the note with the given rowId
+     *
+     * @return void
+     */
+    public void deleteAllNotes(){
+        mDb.delete(DATABASE_TABLE, KEY_ROWID + "> 0", null);
+    }
+
+    /**
      * Return a Cursor over the list of all notes in the database
      *
      * @return Cursor over all notes
