@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
@@ -18,7 +20,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private NotesDbAdapter mDbHelper;
     private int mNoteNumber = 1;
     private SQLiteDatabase mDb;
+    //TextView tv2 = (TextView) findViewById(R.id.tv2);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
             // todoitems.remove(position);
             // aa.notifyDataSetChanged();
         });
+
+        registerForContextMenu(mavariableListView);
 
     }
 
@@ -86,7 +96,45 @@ public class MainActivity extends AppCompatActivity {
         fillData();
     }
 
-    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.google_search:
+                try {
+                    Cursor c = (Cursor) mavariableListView.getItemAtPosition(info.position);
+                    String escapedQuery = URLEncoder.encode(c.getString(2), "UTF-8");
+                    Uri uri = Uri.parse("http://www.google.com/search?q=" + escapedQuery);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            case R.id.maps_search:
+                try {
+                    Cursor c = (Cursor) mavariableListView.getItemAtPosition(info.position);
+                    String escapedQuery = URLEncoder.encode(c.getString(2), "UTF-8");
+                    Uri uri = Uri.parse("https://www.google.com/maps/place/" + escapedQuery);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

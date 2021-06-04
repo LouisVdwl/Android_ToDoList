@@ -7,4 +7,6 @@
     <string name="opt2">Annuler</string>
     <string name="delete_message">Voulez-vous vraiment tout effacer ?</string>
     <string name="title_message">Confirmation</string>
+    <string name="google_search">Rechercher sur Google</string>
+    <string name="maps_search">Rechercher sur maps</string>
 </resources>

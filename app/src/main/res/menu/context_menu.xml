@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+xmlns:tools="http://schemas.android.com/tools"
+tools:ignore="MissingConstraints">
+<item android:id="@+id/google_search"
+    android:title="@string/google_search" />
+<item android:id="@+id/maps_search"
+    android:title="@string/maps_search" />
 </menu>
